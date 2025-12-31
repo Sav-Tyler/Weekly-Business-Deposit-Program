@@ -1,1 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Business Deposit Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --bg: #f9fafb;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .sidebar h2 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #374151;
+            padding-bottom: 10px;
+        }
+
+        .nav-item {
+            padding: 12px 15px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: #374151;
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            border-left-color: #fff;
+            font-weight: 600;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-row.three {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .table th {
+            background: var(--bg);
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-muted {
+            color: var(--text-light);
+            font-size: 12px;
+        }
+
+        .summary-box {
+            background: #f0f9ff;
+            padding: 15px;
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+        }
+
+        .summary-row.total {
+            font-weight: bold;
+            font-size: 16px;
+            border-top: 2px solid var(--primary);
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        .day-section {
+            background: #f9fafb;
+            padding: 15px;
+            border-left: 3px solid var(--primary);
+            border-radius: 3px;
+            margin: 15px 0;
+            border: 1px solid var(--border);
+        }
+
+        .day-header {
+            font-weight: bold;
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .denomination-row {
+            display: grid;
+            grid-template-columns: 120px 80px 1fr;
+            gap: 10px;
+            align-items: center;
+            margin: 6px 0;
+        }
+
+        .denomination-row label {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .denomination-row input {
+            margin: 0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .modal-footer {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .cheque-entry {
+            background: #f3f4f6;
+            padding: 12px;
+            border-left: 3px solid var(--primary);
+            margin: 10px 0;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-total {
+            text-align: right;
+            font-weight: bold;
+            color: var(--primary);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .denomination-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <h2>📊 Menu</h2>
+            <div class="nav-item active" onclick="showSection('dashboard')">Dashboard</div>
+            <div class="nav-item" onclick="showSection('deposit')">💰 Weekly Deposit</div>
+            <div class="nav-item" onclick="showSection('pettycash')">🏧 Petty Cash</div>
+            <div class="nav-item" onclick="showSection('history')">📁 History</div>
+            <div class="nav-item" onclick="showSection('settings')">⚙️ Settings</div>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <h1 id="pageTitle">Dashboard</h1>
+            </div>
+
+            <div class="content-area">
+                <!-- DASHBOARD -->
+                <div id="dashboard" class="section active">
+                    <div class="card">
+                        <div class="card-title">Business Summary</div>
+                        <div class="summary-box">
+                            <div class="summary-row">
+                                <span>Company:</span>
+                                <strong id="dashCompany">Not Set</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Fiscal Year:</span>
+                                <strong id="dashFiscal">2024-2025</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Current Month:</span>
+                                <strong id="dashMonth">December</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Quick Actions</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <button class="btn-primary" onclick="showSection('deposit')">Record Weekly Deposit</button>
+                            <button class="btn-primary" onclick="showSection('pettycash')">Count Petty Cash</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Recent Activity</div>
+                        <div id="recentActivity" style="color: var(--text-light);">
+                            No recent activity. Start by recording a deposit or petty cash count.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WEEKLY DEPOSIT -->
+                <div id="deposit" class="section">
+                    <div class="card">
+                        <div class="card-title">Weekly Deposit Entry</div>
+                        
+                        <div class="form-group">
+                            <label>Deposit Week (Select Month):</label>
+                            <div style="display: flex; gap: 10px;">
+                                <select id="depositMonth" style="flex: 1;" onchange="updateDepositUI()">
+                                    <option value="">-- Select Month --</option>
+                                </select>
+                                <button class="btn-primary btn-sm" onclick="openDepositDatePicker()">📅 Pick Date</button>
+                            </div>
+                        </div>
+
+                        <!-- DAILY BREAKDOWN (Mon-Sun) -->
+                        <div id="depositDaysContainer"></div>
+
+                        <!-- WEEKLY TOTALS -->
+                        <div class="summary-box" style="background: #e8f5e9; border-left-color: var(--success); margin-top: 30px;">
+                            <div class="summary-row">
+                                <span>Weekly POS Sales Total:</span>
+                                <strong id="weeklyPOSTotal">$0.00</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Weekly Cash Total:</span>
+                                <strong id="weeklyCashTotal">$0.00</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Weekly Cards/EFT/DD Total:</span>
+                                <strong id="weeklyCardsTotal">$0.00</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Weekly Cheque Total:</span>
+                                <strong id="weeklyChequeTotal">$0.00</strong>
+                            </div>
+                            <div class="summary-row total" style="color: var(--success);">
+                                <span>TOTAL WEEKLY DEPOSIT:</span>
+                                <strong id="totalDeposit" style="font-size: 18px;">$0.00</strong>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="btn-success" onclick="saveDeposit()" style="flex: 1;">💾 Save Deposit</button>
+                            <button class="btn-primary" onclick="printDeposit()" style="flex: 1;">🖨️ Print Report</button>
+                            <button class="btn-secondary" onclick="clearDeposit()" style="flex: 1;">🔄 Clear Form</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WEEKLY PETTY CASH -->
+                <div id="pettycash" class="section">
+                    <div class="card">
+                        <div class="card-title">Weekly Petty Cash Count</div>
+                        
+                        <div class="form-group">
+                            <label>Petty Cash Week (Select Month):</label>
+                            <div style="display: flex; gap: 10px;">
+                                <select id="pettycashMonth" style="flex: 1;" onchange="updatePettyCashUI()">
+                                    <option value="">-- Select Month --</option>
+                                </select>
+                                <button class="btn-primary btn-sm" onclick="openPettyCashDatePicker()">📅 Pick Date</button>
+                            </div>
+                        </div>
+
+                        <div class="summary-box">
+                            <div class="summary-row">
+                                <span>Starting Float:</span>
+                                <strong id="pcFloatAmount">$200.00</strong>
+                            </div>
+                        </div>
+
+                        <h3 style="color: var(--primary); margin-top: 20px; margin-bottom: 15px;">💵 Coins Count</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Denomination</th>
+                                    <th>Qty</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pcCoinsTable">
+                            </tbody>
+                        </table>
+
+                        <h3 style="color: var(--primary); margin-top: 20px; margin-bottom: 15px;">💵 Bills Count</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Denomination</th>
+                                    <th>Qty</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pcBillsTable">
+                            </tbody>
+                        </table>
+
+                        <div class="summary-box" style="margin-top: 20px;">
+                            <div class="summary-row">
+                                <span>Total Coins:</span>
+                                <strong id="pcTotalCoins">$0.00</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Total Bills:</span>
+                                <strong id="pcTotalBills">$0.00</strong>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total Cash on Hand:</span>
+                                <strong id="pcTotalCash">$0.00</strong>
+                            </div>
+                            <div class="summary-row total" style="color: var(--warning);">
+                                <span>Variance (Short/Over):</span>
+                                <strong id="pcVariance">$0.00</strong>
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="btn-success" onclick="savePettyCash()" style="flex: 1;">💾 Save Petty Cash</button>
+                            <button class="btn-primary" onclick="printPettyCash()" style="flex: 1;">🖨️ Print Report</button>
+                            <button class="btn-secondary" onclick="clearPettyCash()" style="flex: 1;">🔄 Clear Form</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HISTORY -->
+                <div id="history" class="section">
+                    <div class="card">
+                        <div class="card-title">Records History</div>
+                        
+                        <div class="form-group">
+                            <label>Fiscal Year:</label>
+                            <select id="historyFiscalYear" onchange="loadHistory()">
+                                <option value="2024-2025">2024-2025</option>
+                            </select>
+                        </div>
+
+                        <h3 style="color: var(--primary); margin: 20px 0 15px 0;">Weekly Deposits</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Date Recorded</th>
+                                    <th>Total Amount</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="depositHistory">
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted">No deposits recorded yet</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3 style="color: var(--primary); margin: 30px 0 15px 0;">Petty Cash Counts</h3>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Date Recorded</th>
+                                    <th>Cash on Hand</th>
+                                    <th>Variance</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pettyCashHistory">
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">No petty cash counts recorded yet</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div style="margin-top: 20px;">
+                            <button class="btn-primary" onclick="archiveYear()" style="width: 100%;">📦 Archive This Fiscal Year</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SETTINGS -->
+                <div id="settings" class="section">
+                    <div class="card">
+                        <div class="card-title">Business Information</div>
+                        
+                        <div class="form-group">
+                            <label>Business Name:</label>
+                            <input type="text" id="businessName" placeholder="Your Business Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Street Address:</label>
+                            <input type="text" id="businessAddress">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>City:</label>
+                                <input type="text" id="businessCity">
+                            </div>
+                            <div class="form-group">
+                                <label>Province/State:</label>
+                                <input type="text" id="businessProvince">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Phone Number:</label>
+                                <input type="tel" id="businessPhone">
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address:</label>
+                                <input type="email" id="businessEmail">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Petty Cash Configuration</div>
+                        
+                        <div class="form-group">
+                            <label>Petty Cash Starting Float Amount ($):</label>
+                            <input type="number" id="pettyCashFloat" step="0.01" min="0" value="200.00">
+                            <div class="text-muted" style="margin-top: 5px;">This is the standard float amount for petty cash</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Bank Account Information</div>
+                        
+                        <div class="form-group">
+                            <label>Bank Name:</label>
+                            <input type="text" id="bankName" placeholder="Your Bank Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Account Holder Name:</label>
+                            <input type="text" id="accountHolder">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Transit Number:</label>
+                                <input type="text" id="transitNumber">
+                            </div>
+                            <div class="form-group">
+                                <label>Institution Number:</label>
+                                <input type="text" id="institutionNumber">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Account Number (Last 4 Digits):</label>
+                            <input type="text" id="accountNumber" placeholder="XXXX" maxlength="4">
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Fiscal Year Settings</div>
+                        
+                        <div class="form-group">
+                            <label>Fiscal Year Start Month:</label>
+                            <select id="fiscalYearStart">
+                                <option value="01">January</option>
+                                <option value="04">April</option>
+                                <option value="07">July</option>
+                                <option value="10">October</option>
+                            </select>
+                        </div>
+
+                        <div class="text-muted" style="margin-top: 10px;">
+                            Fiscal year determines how your deposits and petty cash are organized and archived.
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn-success" onclick="saveSettings()" style="flex: 1;">💾 Save Settings</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATE PICKER MODAL -->
+    <div id="datePickerModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">Select Date</div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 12px;">Month:</label>
+                    <select id="dpMonth" style="font-size: 14px;">
+                        <option value="0">January</option>
+                        <option value="1">February</option>
+                        <option value="2">March</option>
+                        <option value="3">April</option>
+                        <option value="4">May</option>
+                        <option value="5">June</option>
+                        <option value="6">July</option>
+                        <option value="7">August</option>
+                        <option value="8">September</option>
+                        <option value="9">October</option>
+                        <option value="10">November</option>
+                        <option value="11">December</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 12px;">Day:</label>
+                    <input type="number" id="dpDay" min="1" max="31" value="1" style="font-size: 14px;">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label style="font-size: 12px;">Year:</label>
+                    <input type="number" id="dpYear" style="font-size: 14px;">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeDatePickerModal()">Cancel</button>
+                <button class="btn-primary" onclick="confirmDateSelection()">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
 
