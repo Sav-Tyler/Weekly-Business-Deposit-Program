@@ -1,0 +1,16 @@
+{
+  "name": "weekly-business-deposit-manager",
+  "version": "1.0.0",
+  "description": "A customizable weekly deposit program for business",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "keywords": ["deposit", "petty-cash", "business"],
+  "author": "Sav-Tyler",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^latest"
+  }
+}
