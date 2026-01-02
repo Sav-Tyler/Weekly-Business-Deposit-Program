@@ -123,11 +123,21 @@
         .form-group {
             margin-bottom: 15px;
         }
+		
+		.form-group.deposit-date-group {
+            max-width: 180px;
+        }
+
+        .form-group.deposit-date-group input[type="date"] {
+            width: 100%;
+            max-width: 180px;
+        }
 
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
+            font-size: 14px;
         }
 
         input, select, textarea {
@@ -215,25 +225,22 @@
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 14px;
+            margin: 8px 0;
+            font-size: 13px;
         }
 
         .table th {
             background: var(--bg);
-            padding: 12px;
+            padding: 6px 8px;
             text-align: left;
             font-weight: bold;
             border-bottom: 2px solid var(--border);
+            font-size: 12px;
         }
 
         .table td {
-            padding: 10px 12px;
+            padding: 6px 8px;
             border-bottom: 1px solid var(--border);
-        }
-
-        .table tbody tr:hover {
-            background: #f9f9f9;
         }
 
         .text-right {
@@ -271,40 +278,106 @@
             margin-top: 8px;
         }
 
+        /* Day sections 2-column grid layout */
+        #depositDaysContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
         .day-section {
             background: #f9fafb;
-            padding: 15px;
+            padding: 12px;
             border-left: 3px solid var(--primary);
             border-radius: 3px;
-            margin: 15px 0;
             border: 1px solid var(--border);
         }
 
         .day-header {
             font-weight: bold;
-            font-size: 16px;
+            font-size: 15px;
             color: var(--primary);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .denomination-row {
-            display: grid;
-            grid-template-columns: 120px 80px 1fr;
-            gap: 10px;
+        /* POS sales - compact inline row */
+        .pos-sales-row {
+            display: flex;
             align-items: center;
-            margin: 6px 0;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
-        .denomination-row label {
-            margin: 0;
+        .pos-sales-row label {
+            flex-shrink: 0;
+            margin-bottom: 0;
             font-weight: 500;
+            font-size: 13px;
+            white-space: nowrap;
         }
 
-        .denomination-row input {
-            margin: 0;
+        .pos-sales-input {
+            width: 70px !important;
+            max-width: 70px;
+            padding: 6px !important;
+            font-size: 13px !important;
+        }
+
+        /* Quantity inputs - 50px */
+        input.qty-input {
+            width: 50px !important;
+            max-width: 50px;
+            padding: 4px !important;
+            font-size: 13px !important;
+        }
+
+        /* Currency display inputs - 65px */
+        input.currency-input {
+            width: 65px !important;
+            max-width: 65px;
+            padding: 4px !important;
+            font-size: 13px !important;
+        }
+
+        /* Cards grid - compact */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .cards-grid .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cards-grid label {
+            font-weight: 500;
+            margin-bottom: 3px;
+            font-size: 11px;
+        }
+
+        .cards-grid input {
+            width: 65px !important;
+            padding: 4px !important;
+            font-size: 12px !important;
+        }
+
+        .cards-grid input[readonly] {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 8px 0 4px 0;
         }
 
         .modal {
@@ -350,26 +423,6 @@
             justify-content: flex-end;
         }
 
-        .cheque-entry {
-            background: #f3f4f6;
-            padding: 12px;
-            border-left: 3px solid var(--primary);
-            margin: 10px 0;
-            border-radius: 3px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .day-total {
-            text-align: right;
-            font-weight: bold;
-            color: var(--primary);
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid var(--border);
-        }
-
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
@@ -384,20 +437,266 @@
                 grid-template-columns: 1fr;
             }
 
-            .denomination-row {
+            #depositDaysContainer {
                 grid-template-columns: 1fr;
             }
         }
-    </style>
+    
+        /* Daily Cash Out Styles */
+        .cashcount-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .cashcount-table thead {
+            background: #f3f4f6;
+            font-weight: 600;
+        }
+
+        .cashcount-table th {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 2px solid #d1d5db;
+        }
+
+        .cashcount-table td {
+            padding: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .cashcount-table input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .cashcount-table input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .subsection {
+            margin-bottom: 20px;
+        }
+
+        .subsection h4 {
+            margin-bottom: 12px;
+            color: var(--text);
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+        }
+
+        .summary-item span {
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .summary-item strong {
+            font-size: 16px;
+            color: var(--text);
+            margin-left: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--text-light);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--text);
+        }
+
+        .btn-outline {
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+		
+        /* === Daily Cash Out Compact Styling === */
+        
+        #dailycashout {
+            font-size: 14px;
+        }
+
+        #dailycashout .card {
+            margin-bottom: 12px;
+            padding: 12px;
+        }
+
+        #dailycashout .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1f2937;
+        }
+
+        #dailycashout .card-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        #dailycashout .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #dailycashout .form-group label {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 3px;
+            color: #4b5563;
+        }
+
+        #dailycashout input[type="text"],
+        #dailycashout input[type="number"],
+        #dailycashout input[type="time"],
+        #dailycashout textarea {
+            font-size: 13px;
+            padding: 4px 6px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        #dailycashout input[type="text"]:focus,
+        #dailycashout input[type="number"]:focus,
+        #dailycashout input[type="time"]:focus,
+        #dailycashout textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        #dailycashout .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        #dailycashout .summary-item {
+            font-size: 13px;
+        }
+
+        #dailycashout .summary-item strong {
+            font-size: 15px;
+        }
+
+        #dailycashout .btn {
+            padding: 6px 12px;
+            font-size: 13px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        #dailycashout .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        #dailycashout .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        #dailycashout .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        #dailycashout .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        #dailycashout .btn-outline {
+            background: white;
+            border: 1px solid #2563eb;
+            color: #2563eb;
+        }
+
+        #dailycashout .btn-outline:hover {
+            background: #f3f4f6;
+        }
+		
+</style>
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
             <h2>📊 Menu</h2>
             <div class="nav-item active" onclick="showSection('dashboard')">Dashboard</div>
+            <div class="nav-item" onclick="showSection('dailycashout')">💵 Daily Cash Out</div>			
             <div class="nav-item" onclick="showSection('deposit')">💰 Weekly Deposit</div>
-            <div class="nav-item" onclick="showSection('pettycash')">🏧 Petty Cash</div>
-            <div class="nav-item" onclick="showSection('history')">📁 History</div>
+            <div class="nav-item" onclick="showSection('pettycash')">🏧 Weekly Petty Cash</div>
+            <div class="nav-item" onclick="showSection('archive')">📁 Fiscal Archive</div>
             <div class="nav-item" onclick="showSection('settings')">⚙️ Settings</div>
         </div>
 
@@ -410,77 +709,355 @@
                 <!-- DASHBOARD -->
                 <div id="dashboard" class="section active">
                     <div class="card">
-                        <div class="card-title">Business Summary</div>
-                        <div class="summary-box">
-                            <div class="summary-row">
-                                <span>Company:</span>
-                                <strong id="dashCompany">Not Set</strong>
-                            </div>
-                            <div class="summary-row">
-                                <span>Fiscal Year:</span>
-                                <strong id="dashFiscal">2024-2025</strong>
-                            </div>
-                            <div class="summary-row">
-                                <span>Current Month:</span>
-                                <strong id="dashMonth">December</strong>
-                            </div>
-                        </div>
+                        <div class="card-title">This week</div>
+                        <p>Summary of current weekly deposit, petty cash status, and any unresolved variances.</p>
                     </div>
 
                     <div class="card">
-                        <div class="card-title">Quick Actions</div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                            <button class="btn-primary" onclick="showSection('deposit')">Record Weekly Deposit</button>
-                            <button class="btn-primary" onclick="showSection('pettycash')">Count Petty Cash</button>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-title">Recent Activity</div>
-                        <div id="recentActivity" style="color: var(--text-light);">
-                            No recent activity. Start by recording a deposit or petty cash count.
-                        </div>
+                        <div class="card-title">Recent activity</div>
+                        <p>Recent deposits, petty cash reconciliations, and archive reminders would appear here.</p>
                     </div>
                 </div>
+
+                                               <!-- DAILY CASH OUT -->
+                <div id="dailycashout" class="section">
+                    <!-- TOP: Reconciliation Summary + Action Buttons -->
+                    <div class="card" style="background:#f3f4f6; border:2px solid #3b82f6; margin-bottom:15px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                            <div class="card-title" style="margin:0;">Reconciliation Summary</div>
+                            <div style="display:flex; gap:8px;">
+                                <button class="btn btn-primary" onclick="saveDailyCashOut()" style="padding:6px 12px; font-size:12px;">Save</button>
+                                <button class="btn btn-secondary" onclick="clearDailyCashOut()" style="padding:6px 12px; font-size:12px;">Clear</button>
+                                <button class="btn btn-outline" onclick="printDailyCashOut()" style="padding:6px 12px; font-size:12px;">Print</button>
+                            </div>
+                        </div>
+
+                        <div class="summary-grid" style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; font-size:12px;">
+                            <div style="padding:8px; background:white; border:1px solid #e5e7eb; border-radius:4px;">
+                                <div style="color:#666; font-size:11px;">Total Cash</div>
+                                <strong id="sumCashCounted" style="font-size:14px;">$0.00</strong>
+                            </div>
+                            <div style="padding:8px; background:white; border:1px solid #e5e7eb; border-radius:4px;">
+                                <div style="color:#666; font-size:11px;">Expected Cash</div>
+                                <strong id="sumExpectedCash" style="font-size:14px;">$0.00</strong>
+                            </div>
+                            <div style="padding:8px; background:white; border:1px solid #e5e7eb; border-radius:4px;">
+                                <div style="color:#666; font-size:11px;">Cards/EFT</div>
+                                <strong id="sumCardTotal" style="font-size:14px;">$0.00</strong>
+                            </div>
+                            <div style="padding:8px; background:white; border:1px solid #e5e7eb; border-radius:4px;">
+                                <div style="color:#666; font-size:11px;">Cheques</div>
+                                <strong id="sumChequeTotal" style="font-size:14px;">$0.00</strong>
+                            </div>
+                            <div style="padding:8px; background:white; border:1px solid #e5e7eb; border-radius:4px;">
+                                <div style="color:#666; font-size:11px;">Expected Total</div>
+                                <strong id="sumExpectedTotal" style="font-size:14px;">$0.00</strong>
+                            </div>
+                            <div style="padding:8px; background:white; border:1px solid #e5e7eb; border-radius:4px;">
+                                <div style="color:#666; font-size:11px;">POS Total</div>
+                                <strong id="sumPOSTotal" style="font-size:14px;">$0.00</strong>
+                            </div>
+                            <div style="padding:8px; background:#fff3cd; border:2px solid #ef4444; border-radius:4px; grid-column:1/3;">
+                                <div style="color:#666; font-size:11px;">Variance</div>
+                                <strong id="sumVariance" style="font-size:16px; color:#ef4444;">$0.00</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Header Info -->
+                    <div class="card">
+                        <div class="card-row" style="gap:8px;">
+                            <div class="form-group" style="flex:0 0 150px;">
+                                <label style="font-size:12px;">Date</label>
+                                <input type="text" id="dailyDate" readonly style="background:#f3f4f6; cursor:not-allowed; font-size:12px; padding:4px;">
+                            </div>
+                             <div class="form-group" style="flex:0 0 150px;">
+								<label style="font-size:12px;">Cashier</label>
+								<select id="cashierName" style="font-size:12px; padding:4px; width:100%;">
+								 <option value="">-- Select Cashier --</option>
+								</select>
+							 </div>
+							 <div class="form-group" style="flex:0 0 150px;">
+								<label style="font-size:12px;">Float</label>
+								<input type="number" id="floatAmount" placeholder="0.00" step="0.01" style="font-size:12px; padding:4px;" oninput="calculateDailyCashOut()">
+							 </div>
+                            <div class="form-group" style="flex:0 0 140px;">
+                                <label style="font-size:12px;">POS Total Sales</label>
+                                <input type="number" id="posSales" placeholder="0.00" step="0.01" style="font-size:12px; padding:4px; cursor:text;" oninput="calculateDailyCashOut()">
+                            </div>
+                        </div>
+                    </div>
+
+                                        <!-- Cash Count & Payment Methods -->
+                    <div class="card" style="padding: 12px 12px 8px 12px;">
+                        <div class="card-title" style="font-size:16px; margin-bottom:8px;">💵 Cash Count</div>
+                        <div style="display:grid; grid-template-columns:250px 250px 280px; gap:8px;">
+                            <!-- Coins -->
+                            <div style="padding: 0;">
+                                <h4 style="font-size:13px; margin-bottom:4px; color:#333; font-weight:600; border-bottom:1px solid #ddd; padding-bottom:2px;">Coins</h4>
+                                <div style="display:flex; flex-direction:column; gap:0px;">
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <span style="width:60px; font-size:13px;">$2.00</span>
+                                        <input type="number" id="coin200_qty" value="0" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                        <span id="coin200_amt" style="width:70px; text-align:right; font-size:13px;">$0.00</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <span style="width:60px; font-size:13px;">$1.00</span>
+                                        <input type="number" id="coin100_qty" value="0" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                        <span id="coin100_amt" style="width:70px; text-align:right; font-size:13px;">$0.00</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <span style="width:60px; font-size:13px;">$0.25</span>
+                                        <input type="number" id="coin25_qty" value="0" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                        <span id="coin25_amt" style="width:70px; text-align:right; font-size:13px;">$0.00</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <span style="width:60px; font-size:13px;">$0.10</span>
+                                        <input type="number" id="coin10_qty" value="0" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                        <span id="coin10_amt" style="width:70px; text-align:right; font-size:13px;">$0.00</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <span style="width:60px; font-size:13px;">$0.05</span>
+                                        <input type="number" id="coin5_qty" value="0" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                        <span id="coin5_amt" style="width:70px; text-align:right; font-size:13px;">$0.00</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <span style="width:60px; font-size:13px;">$0.01</span>
+                                        <input type="number" id="coin1_qty" value="0" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                        <span id="coin1_amt" style="width:70px; text-align:right; font-size:13px;">$0.00</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:2px 0; background:#f9f9f9; border-top:1px solid #ddd; font-weight:bold; font-size:13px;">
+                                        <span style="width:60px;">Total</span>
+                                        <span style="width:90px;"></span>
+                                        <span id="totalCoins" style="width:70px; text-align:right;">$0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bills -->
+                            <div style="padding: 0;">
+                                <h4 style="font-size:13px; margin-bottom:4px; color:#333; font-weight:600; border-bottom:1px solid #ddd; padding-bottom:2px;">Bills</h4>
+                                <div style="display:flex; flex-direction:column; gap:0px;">
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <span style="width:60px; font-size:13px;">$5</span>
+                                        <input type="number" id="bill5_qty" value="0" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                        <span id="bill5_amt" style="width:70px; text-align:right; font-size:13px;">$0.00</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <span style="width:60px; font-size:13px;">$10</span>
+                                        <input type="number" id="bill10_qty" value="0" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                        <span id="bill10_amt" style="width:70px; text-align:right; font-size:13px;">$0.00</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <span style="width:60px; font-size:13px;">$20</span>
+                                        <input type="number" id="bill20_qty" value="0" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                        <span id="bill20_amt" style="width:70px; text-align:right; font-size:13px;">$0.00</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <span style="width:60px; font-size:13px;">$50</span>
+                                        <input type="number" id="bill50_qty" value="0" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                        <span id="bill50_amt" style="width:70px; text-align:right; font-size:13px;">$0.00</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <span style="width:60px; font-size:13px;">$100</span>
+                                        <input type="number" id="bill100_qty" value="0" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                        <span id="bill100_amt" style="width:70px; text-align:right; font-size:13px;">$0.00</span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:2px 0; background:#f9f9f9; border-top:1px solid #ddd; font-weight:bold; font-size:13px;">
+                                        <span style="width:60px;">Total</span>
+                                        <span style="width:90px;"></span>
+                                        <span id="totalBills" style="width:70px; text-align:right;">$0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Payment Methods -->
+                            <div style="padding: 0;">
+                                <h4 style="font-size:13px; margin-bottom:4px; color:#333; font-weight:600; border-bottom:1px solid #ddd; padding-bottom:2px;">Interact</h4>
+                                <div style="display:flex; flex-direction:column; gap:0px;">
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <label style="width:70px; font-size:13px; font-weight:500;">Debit</label>
+                                        <input type="number" id="debitSales" placeholder="0.00" step="0.01" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <label style="width:70px; font-size:13px; font-weight:500;">Visa</label>
+                                        <input type="number" id="visaSales" placeholder="0.00" step="0.01" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <label style="width:70px; font-size:13px; font-weight:500;">M.Card</label>
+                                        <input type="number" id="mastercardSales" placeholder="0.00" step="0.01" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <label style="width:70px; font-size:13px; font-weight:500;">EFT</label>
+                                        <input type="number" id="eftSales" placeholder="0.00" step="0.01" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <label style="width:70px; font-size:13px; font-weight:500;">Cheques</label>
+                                        <input type="number" id="chequeSales" placeholder="0.00" step="0.01" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:4px; padding:1px 0;">
+                                        <label style="width:70px; font-size:13px; font-weight:500;">Other</label>
+                                        <input type="number" id="otherSales" placeholder="0.00" step="0.01" style="width:90px; font-size:13px; padding:3px;" oninput="calculateDailyCashOut()">
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Total Cash Counted -->
+                        <div style="margin-top:8px; padding:8px; background:#e8f5e9; border-radius:4px;">
+                            <div style="font-size:13px; color:#666; margin-bottom:4px;">Total Cash Counted</div>
+                            <input type="text" id="totalCashCounted" readonly style="background:#fff; font-weight:bold; font-size:16px; padding:6px; width:200px;">
+                        </div>
+                    </div>
+
+                        <!-- Float Balance Required + Cheques (Fixed Layout) -->
+<div style="display:grid; grid-template-columns:auto auto 1fr; gap:20px; margin-bottom:15px;">
+    
+    <!-- LEFT: Float Balance Required (Fixed Width) -->
+    <div class="card" style="width:280px; flex-shrink:0;">
+        <div class="card-title" style="font-size:13px; margin-bottom:10px;">Float Balance Required</div>
+        
+        <!-- Coins -->
+        <div style="margin-bottom:12px;">
+            <div style="font-weight:600; font-size:11px; margin-bottom:6px;">Coins</div>
+            <table style="width:100%; border-collapse:collapse; font-size:11px;">
+                <tbody>
+                    <tr>
+                        <td style="padding:2px 4px;">$2.00</td>
+                        <td style="padding:2px 4px;"><input type="number" id="floatAdj_coin200" value="0" style="width:40px; padding:3px; font-size:10px;"></td>
+                        <td style="padding:2px 4px;"><input type="checkbox" id="confirm_floatAdj_coin200" style="cursor:pointer;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:2px 4px;">$1.00</td>
+                        <td style="padding:2px 4px;"><input type="number" id="floatAdj_coin100" value="0" style="width:40px; padding:3px; font-size:10px;"></td>
+                        <td style="padding:2px 4px;"><input type="checkbox" id="confirm_floatAdj_coin100" style="cursor:pointer;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:2px 4px;">$0.25</td>
+                        <td style="padding:2px 4px;"><input type="number" id="floatAdj_coin25" value="0" style="width:40px; padding:3px; font-size:10px;"></td>
+                        <td style="padding:2px 4px;"><input type="checkbox" id="confirm_floatAdj_coin25" style="cursor:pointer;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:2px 4px;">$0.10</td>
+                        <td style="padding:2px 4px;"><input type="number" id="floatAdj_coin10" value="0" style="width:40px; padding:3px; font-size:10px;"></td>
+                        <td style="padding:2px 4px;"><input type="checkbox" id="confirm_floatAdj_coin10" style="cursor:pointer;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:2px 4px;">$0.05</td>
+                        <td style="padding:2px 4px;"><input type="number" id="floatAdj_coin5" value="0" style="width:40px; padding:3px; font-size:10px;"></td>
+                        <td style="padding:2px 4px;"><input type="checkbox" id="confirm_floatAdj_coin5" style="cursor:pointer;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:2px 4px;">$0.01</td>
+                        <td style="padding:2px 4px;"><input type="number" id="floatAdj_coin1" value="0" style="width:40px; padding:3px; font-size:10px;"></td>
+                        <td style="padding:2px 4px;"><input type="checkbox" id="confirm_floatAdj_coin1" style="cursor:pointer;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Bills -->
+        <div>
+            <div style="font-weight:600; font-size:11px; margin-bottom:6px;">Bills</div>
+            <table style="width:100%; border-collapse:collapse; font-size:11px;">
+                <tbody>
+                    <tr>
+                        <td style="padding:2px 4px;">$5</td>
+                        <td style="padding:2px 4px;"><input type="number" id="floatAdj_bill5" value="0" style="width:40px; padding:3px; font-size:10px;"></td>
+                        <td style="padding:2px 4px;"><input type="checkbox" id="confirm_floatAdj_bill5" style="cursor:pointer;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:2px 4px;">$10</td>
+                        <td style="padding:2px 4px;"><input type="number" id="floatAdj_bill10" value="0" style="width:40px; padding:3px; font-size:10px;"></td>
+                        <td style="padding:2px 4px;"><input type="checkbox" id="confirm_floatAdj_bill10" style="cursor:pointer;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:2px 4px;">$20</td>
+                        <td style="padding:2px 4px;"><input type="number" id="floatAdj_bill20" value="0" style="width:40px; padding:3px; font-size:10px;"></td>
+                        <td style="padding:2px 4px;"><input type="checkbox" id="confirm_floatAdj_bill20" style="cursor:pointer;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:2px 4px;">$50</td>
+                        <td style="padding:2px 4px;"><input type="number" id="floatAdj_bill50" value="0" style="width:40px; padding:3px; font-size:10px;"></td>
+                        <td style="padding:2px 4px;"><input type="checkbox" id="confirm_floatAdj_bill50" style="cursor:pointer;"></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:2px 4px;">$100</td>
+                        <td style="padding:2px 4px;"><input type="number" id="floatAdj_bill100" value="0" style="width:40px; padding:3px; font-size:10px;"></td>
+                        <td style="padding:2px 4px;"><input type="checkbox" id="confirm_floatAdj_bill100" style="cursor:pointer;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- MIDDLE: Cheques (Fixed Width) -->
+    <div class="card" style="width:340px; flex-shrink:0;">
+        <div class="card-title" style="font-size:13px; margin-bottom:10px;">Cheques</div>
+        
+        <!-- Cheque Input Row -->
+        <div style="margin-bottom:10px;">
+            <input type="text" id="chequeName" placeholder="Name" style="width:80px; padding:6px; font-size:11px; margin-right:5px;">
+            <input type="text" id="chequeNo" placeholder="Cheque #" style="width:60px; padding:6px; font-size:11px; margin-right:5px;">
+            <input type="number" id="chequeAmount" placeholder="Amount" step="0.01" style="width:75px; padding:6px; font-size:11px; margin-right:5px;">
+            <button onclick="addCheque()" style="padding:6px 10px; background:#2563eb; color:white; border:none; border-radius:4px; cursor:pointer; font-size:11px; font-weight:600;">Add</button>
+        </div>
+
+        <!-- Cheque List -->
+        <div id="chequeList" style="border:1px solid #ddd; border-radius:4px; padding:6px; max-height:200px; overflow-y:auto; font-size:10px;">
+            <!-- Cheques added here -->
+        </div>
+
+        <!-- Cheque Total -->
+        <div style="margin-top:10px; padding:8px; background:#f0f0f0; border-radius:4px; text-align:right;">
+            <div style="font-weight:600; font-size:11px;">Total: <span id="chequeTotalDisplay">$0.00</span></div>
+        </div>
+    </div>
+
+    <!-- RIGHT: Spacer for responsive content -->
+    <div style="flex:1;"></div>
+</div>
+
+<!-- Notes Section (Full Width, Below Float/Cheques) -->
+<div class="card" style="margin-bottom:15px;">
+    <div class="card-title" style="font-size:13px; margin-bottom:10px;">Notes</div>
+    <textarea id="notes" rows="3" style="width:100%; padding:8px; font-size:11px; resize:vertical; border:1px solid #ddd; border-radius:4px;" placeholder="Any notes..."></textarea>
+</div>
+</div>
+                        
 
                 <!-- WEEKLY DEPOSIT -->
                 <div id="deposit" class="section">
                     <div class="card">
                         <div class="card-title">Weekly Deposit Entry</div>
                         
-                        <div class="form-group">
-                            <label>Deposit Week (Select Month):</label>
-                            <div style="display: flex; gap: 10px;">
-                                <select id="depositMonth" style="flex: 1;" onchange="updateDepositUI()">
-                                    <option value="">-- Select Month --</option>
-                                </select>
-                                <button class="btn-primary btn-sm" onclick="openDepositDatePicker()">📅 Pick Date</button>
-                            </div>
+                        <div class="form-group deposit-date-group" style="margin-bottom: 15px;">
+                            <label for="depositDate">Deposit Date:</label>
+                            <input type="date" id="depositDate">
                         </div>
 
-                        <!-- DAILY BREAKDOWN (Mon-Sun) -->
                         <div id="depositDaysContainer"></div>
 
                         <!-- WEEKLY TOTALS -->
                         <div class="summary-box" style="background: #e8f5e9; border-left-color: var(--success); margin-top: 30px;">
                             <div class="summary-row">
-                                <span>Weekly POS Sales Total:</span>
-                                <strong id="weeklyPOSTotal">$0.00</strong>
-                            </div>
-                            <div class="summary-row">
-                                <span>Weekly Cash Total:</span>
+                                <span>Weekly cash total</span>
                                 <strong id="weeklyCashTotal">$0.00</strong>
                             </div>
                             <div class="summary-row">
-                                <span>Weekly Cards/EFT/DD Total:</span>
+                                <span>Weekly POS sales total</span>
+                                <strong id="weeklyPOSTotal">$0.00</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Weekly cards/EFT/DD total</span>
                                 <strong id="weeklyCardsTotal">$0.00</strong>
                             </div>
                             <div class="summary-row">
-                                <span>Weekly Cheque Total:</span>
+                                <span>Weekly cheque total</span>
                                 <strong id="weeklyChequeTotal">$0.00</strong>
                             </div>
                             <div class="summary-row total" style="color: var(--success);">
-                                <span>TOTAL WEEKLY DEPOSIT:</span>
+                                <span>Weekly deposit total</span>
                                 <strong id="totalDeposit" style="font-size: 18px;">$0.00</strong>
                             </div>
                         </div>
@@ -496,18 +1073,10 @@
                 <!-- WEEKLY PETTY CASH -->
                 <div id="pettycash" class="section">
                     <div class="card">
-                        <div class="card-title">Weekly Petty Cash Count</div>
+                        <div class="card-title">Weekly Petty Cash</div>
+                        <h3 style="color: var(--primary); margin: 20px 0 15px 0;">Petty cash reconciliation</h3>
+                        <p style="margin-bottom: 20px;">Count petty cash float, record petty cash expenses, and compute short/over against configured float.</p>
                         
-                        <div class="form-group">
-                            <label>Petty Cash Week (Select Month):</label>
-                            <div style="display: flex; gap: 10px;">
-                                <select id="pettycashMonth" style="flex: 1;" onchange="updatePettyCashUI()">
-                                    <option value="">-- Select Month --</option>
-                                </select>
-                                <button class="btn-primary btn-sm" onclick="openPettyCashDatePicker()">📅 Pick Date</button>
-                            </div>
-                        </div>
-
                         <div class="summary-box">
                             <div class="summary-row">
                                 <span>Starting Float:</span>
@@ -515,7 +1084,7 @@
                             </div>
                         </div>
 
-                        <h3 style="color: var(--primary); margin-top: 20px; margin-bottom: 15px;">💵 Coins Count</h3>
+                        <h4 style="color: var(--primary); margin-top: 20px; margin-bottom: 10px;">💵 Coins Count</h4>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -528,7 +1097,7 @@
                             </tbody>
                         </table>
 
-                        <h3 style="color: var(--primary); margin-top: 20px; margin-bottom: 15px;">💵 Bills Count</h3>
+                        <h4 style="color: var(--primary); margin-top: 20px; margin-bottom: 10px;">💵 Bills Count</h4>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -568,19 +1137,21 @@
                     </div>
                 </div>
 
-                <!-- HISTORY -->
-                <div id="history" class="section">
+                <!-- FISCAL ARCHIVE -->
+                <div id="archive" class="section">
                     <div class="card">
-                        <div class="card-title">Records History</div>
+                        <div class="card-title">Fiscal Archive</div>
+                        <h3 style="color: var(--primary); margin: 20px 0 15px 0;">Archive by fiscal year</h3>
+                        <p>List of fiscal years and months with options to archive and view historical deposits and petty cash records.</p>
                         
                         <div class="form-group">
                             <label>Fiscal Year:</label>
-                            <select id="historyFiscalYear" onchange="loadHistory()">
+                            <select id="archiveFiscalYear" onchange="loadArchive()">
                                 <option value="2024-2025">2024-2025</option>
                             </select>
                         </div>
 
-                        <h3 style="color: var(--primary); margin: 20px 0 15px 0;">Weekly Deposits</h3>
+                        <h4 style="color: var(--primary); margin: 20px 0 15px 0;">Weekly Deposits</h4>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -597,7 +1168,7 @@
                             </tbody>
                         </table>
 
-                        <h3 style="color: var(--primary); margin: 30px 0 15px 0;">Petty Cash Counts</h3>
+                        <h4 style="color: var(--primary); margin: 30px 0 15px 0;">Petty Cash Counts</h4>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -625,6 +1196,10 @@
                 <div id="settings" class="section">
                     <div class="card">
                         <div class="card-title">Business Information</div>
+						
+						<div class="form-group">
+							<button onclick="openCashierManager()" class="btn-secondary" style="width:200px;">👥 Manage Cashiers</button><button onclick="openFloatModal()" class="btn-secondary" style="width:200px;">💰 Configure Cash Float</button>
+						</div>
                         
                         <div class="form-group">
                             <label>Business Name:</label>
@@ -657,10 +1232,10 @@
                                 <input type="email" id="businessEmail">
                             </div>
                         </div>
-                    </div>
+                    </div>			
 
                     <div class="card">
-                        <div class="card-title">Petty Cash Configuration</div>
+                        <div class="card-title">Petty Cash</div>
                         
                         <div class="form-group">
                             <label>Petty Cash Starting Float Amount ($):</label>
@@ -678,7 +1253,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Account Holder Name:</label>
+                            <label>Legal Business Name:</label>
                             <input type="text" id="accountHolder">
                         </div>
 
@@ -700,20 +1275,35 @@
                     </div>
 
                     <div class="card">
-                        <div class="card-title">Fiscal Year Settings</div>
-                        
-                        <div class="form-group">
+                          <div class="card-title">Fiscal Year & Archive</div>
+                            <div class="form-group">
                             <label>Fiscal Year Start Month:</label>
                             <select id="fiscalYearStart">
                                 <option value="01">January</option>
+                                <option value="02">February</option>
+                                <option value="03">March</option>
                                 <option value="04">April</option>
+                                <option value="05">May</option>
+                                <option value="06">June</option>
                                 <option value="07">July</option>
+                                <option value="08">August</option>
+                                <option value="09">September</option>
                                 <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
                             </select>
                         </div>
 
-                        <div class="text-muted" style="margin-top: 10px;">
-                            Fiscal year determines how your deposits and petty cash are organized and archived.
+                        <div class="text-muted">At fiscal year end, the program will prompt to archive that year; you can skip and be reminded again on next startup.</div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">Printing & Layouts</div>
+                        
+                        <div class="form-group">
+                            <label>Default Printer:</label>
+                            <input type="text" id="defaultPrinter" placeholder="Your default printer">
+                            <div class="text-muted" style="margin-top: 5px;">Standard print dialog will still open; this only sets the initial printer selection.</div>
                         </div>
                     </div>
 
@@ -723,49 +1313,484 @@
                 </div>
             </div>
         </div>
-    </div>
+    
+    <script>
+        // Days of the week
+        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        
+        // Canadian coin and bill denominations
+        const coins = [
+            { label: '$2.00', value: 2.00 },
+            { label: '$1.00', value: 1.00 },
+            { label: '$0.25', value: 0.25 },
+            { label: '$0.10', value: 0.10 },
+            { label: '$0.05', value: 0.05 },
+            { label: '$0.01', value: 0.01 }
+        ];
+        
+        const bills = [
+            { label: '$5', value: 5 },
+            { label: '$10', value: 10 },
+            { label: '$20', value: 20 },
+            { label: '$50', value: 50 },
+            { label: '$100', value: 100 }
+        ];
 
-    <!-- DATE PICKER MODAL -->
-    <div id="datePickerModal" class="modal">
-        <div class="modal-content" style="max-width: 400px;">
-            <div class="modal-header">Select Date</div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label style="font-size: 12px;">Month:</label>
-                    <select id="dpMonth" style="font-size: 14px;">
-                        <option value="0">January</option>
-                        <option value="1">February</option>
-                        <option value="2">March</option>
-                        <option value="3">April</option>
-                        <option value="4">May</option>
-                        <option value="5">June</option>
-                        <option value="6">July</option>
-                        <option value="7">August</option>
-                        <option value="8">September</option>
-                        <option value="9">October</option>
-                        <option value="10">November</option>
-                        <option value="11">December</option>
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label style="font-size: 12px;">Day:</label>
-                    <input type="number" id="dpDay" min="1" max="31" value="1" style="font-size: 14px;">
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label style="font-size: 12px;">Year:</label>
-                    <input type="number" id="dpYear" style="font-size: 14px;">
-                </div>
-            </div>
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            populateMonthDropdowns();
+            initializeDepositForm();
+            initializePettyCash();
+        });
 
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeDatePickerModal()">Cancel</button>
-                <button class="btn-primary" onclick="confirmDateSelection()">Confirm</button>
-            </div>
+         function populateMonthDropdowns() {
+            // Set today's date in deposit date field
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const dateString = `${year}-${month}-${day}`;
+            document.getElementById('depositDate').value = dateString;
+        }
+
+        function initializeDepositForm() {
+            const container = document.getElementById('depositDaysContainer');
+            container.innerHTML = '';
+
+            days.forEach(day => {
+                const daySection = document.createElement('div');
+                daySection.innerHTML = `
+                    <div class="day-header">
+                        <span>${day}</span>
+                        <span class="day-total-display">Day total: $0.00</span>
+                    </div>
+                    
+                    <div class="pos-date-row">
+                        <div class="pos-sales-row">
+                            <label>POS sales:</label>
+                            <input type="number" class="pos-sales-input" step="0.01" min="0" value="0" onchange="updateDayTotals(this.closest('.day-section'))">
+                        </div>
+                        <div class="day-date-row">
+                            <label>Date:</label>
+                            <input type="date" class="day-date-input" onchange="updateDayTotals(this.closest('.day-section'))">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+                        <!-- LEFT: Coins -->
+                        <div>
+                            <div class="section-label">Cash – Coins</div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Coins</th>
+                                        <th>Qty</th>
+                                        <th style="text-align: right;">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="coins-table"></tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- RIGHT: Bills -->
+                        <div>
+                            <div class="section-label">Cash – Bills</div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Bills</th>
+                                        <th>Qty</th>
+                                        <th style="text-align: right;">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bills-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="section-label">Cards, EFT & DD</div>
+                    <div class="cards-grid">
+                        <div class="field">
+                            <label>Debit</label>
+                            <input type="number" class="cards-debit currency-input" step="0.01" min="0" value="0" onchange="updateDayTotals(this.closest('.day-section'))">
+                        </div>
+                        <div class="field">
+                            <label>Visa</label>
+                            <input type="number" class="cards-visa currency-input" step="0.01" min="0" value="0" onchange="updateDayTotals(this.closest('.day-section'))">
+                        </div>
+                        <div class="field">
+                            <label>MC</label>
+                            <input type="number" class="cards-mc currency-input" step="0.01" min="0" value="0" onchange="updateDayTotals(this.closest('.day-section'))">
+                        </div>
+                        <div class="field">
+                            <label>EFT</label>
+                            <input type="number" class="cards-eft currency-input" step="0.01" min="0" value="0" onchange="updateDayTotals(this.closest('.day-section'))">
+                        </div>
+                        <div class="field">
+                            <label>DD</label>
+                            <input type="number" class="cards-dd currency-input" step="0.01" min="0" value="0" onchange="updateDayTotals(this.closest('.day-section'))">
+                        </div>
+                        <div class="field">
+                            <label style="font-weight: 600;">Total</label>
+                            <input type="text" class="cards-total-display currency-input" readonly value="$0.00">
+                        </div>
+                    </div>
+
+                    <div class="section-label">Cheques</div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="font-size: 11px;">Payee</th>
+                                <th style="font-size: 11px;">Cheque #</th>
+                                <th style="font-size: 11px; text-align: right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="cheques-table"></tbody>
+                    </table>
+                    <button class="btn-primary btn-sm" onclick="addCheque(this)" style="margin-top: 6px; padding: 4px 8px; font-size: 12px;">+ Cheque</button>
+                `;
+
+                // Populate coins
+                const coinsTable = daySection.querySelector('.coins-table');
+                coins.forEach(coin => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${coin.label}</td>
+                        <td><input type="number" class="coinQty qty-input" data-value="${coin.value}" min="0" value="0" onchange="updateDayTotals(this.closest('.day-section'))"></td>
+                        <td class="coinAmount" style="text-align: right;">$0.00</td>
+                    `;
+                    coinsTable.appendChild(row);
+                });
+
+                const coinTotalRow = document.createElement('tr');
+                coinTotalRow.innerHTML = `<td><strong>Total</strong></td><td></td><td class="coinTotal" style="text-align: right;"><strong>$0.00</strong></td>`;
+                coinsTable.appendChild(coinTotalRow);
+
+                // Populate bills
+                const billsTable = daySection.querySelector('.bills-table');
+                bills.forEach(bill => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${bill.label}</td>
+                        <td><input type="number" class="billQty qty-input" data-value="${bill.value}" min="0" value="0" onchange="updateDayTotals(this.closest('.day-section'))"></td>
+                        <td class="billAmount" style="text-align: right;">$0.00</td>
+                    `;
+                    billsTable.appendChild(row);
+                });
+
+                const billTotalRow = document.createElement('tr');
+                billTotalRow.innerHTML = `<td><strong>Total</strong></td><td></td><td class="billTotal" style="text-align: right;"><strong>$0.00</strong></td>`;
+                billsTable.appendChild(billTotalRow);
+
+                const cashTotalRow = document.createElement('tr');
+                cashTotalRow.innerHTML = `<td><strong>Cash</strong></td><td></td><td class="cashTotal" style="text-align: right;"><strong>$0.00</strong></td>`;
+                billsTable.appendChild(cashTotalRow);
+
+                container.appendChild(daySection);
+            });
+        }
+
+        function updateDayTotals(daySection) {
+            // Coins total
+            let coinTotal = 0;
+            daySection.querySelectorAll('.coinQty').forEach(input => {
+                const qty = parseFloat(input.value) || 0;
+                const value = parseFloat(input.getAttribute('data-value'));
+                const amount = qty * value;
+                input.closest('tr').querySelector('.coinAmount').textContent = '$' + amount.toFixed(2);
+                coinTotal += amount;
+            });
+            daySection.querySelector('.coinTotal').textContent = '$' + coinTotal.toFixed(2);
+
+            // Bills total
+            let billTotal = 0;
+            daySection.querySelectorAll('.billQty').forEach(input => {
+                const qty = parseFloat(input.value) || 0;
+                const value = parseFloat(input.getAttribute('data-value'));
+                const amount = qty * value;
+                input.closest('tr').querySelector('.billAmount').textContent = '$' + amount.toFixed(2);
+                billTotal += amount;
+			//Update Weekly Deposit totals
+				updateWeeklyTotals()
+            });
+            daySection.querySelector('.billTotal').textContent = '$' + billTotal.toFixed(2);
+
+            // Cash total
+            const cashTotal = coinTotal + billTotal;
+            daySection.querySelector('.cashTotal').textContent = '$' + cashTotal.toFixed(2);
+
+            // Cards/EFT/DD total
+            const debit = parseFloat(daySection.querySelector('.cards-debit').value) || 0;
+            const visa = parseFloat(daySection.querySelector('.cards-visa').value) || 0;
+            const mc = parseFloat(daySection.querySelector('.cards-mc').value) || 0;
+            const eft = parseFloat(daySection.querySelector('.cards-eft').value) || 0;
+            const dd = parseFloat(daySection.querySelector('.cards-dd').value) || 0;
+            const cardsTotal = debit + visa + mc + eft + dd;
+            daySection.querySelector('.cards-total-display').value = '$' + cardsTotal.toFixed(2);
+
+            // POS sales
+            const posSales = parseFloat(daySection.querySelector('.pos-sales-input').value) || 0;
+
+            // Cheque total
+            const chequeTotal = Array.from(daySection.querySelectorAll('.chequeAmount')).reduce((sum, el) => {
+                return sum + (parseFloat(el.value) || 0);
+            }, 0);
+
+            // Day total
+            const dayTotal = cashTotal + cardsTotal + posSales + chequeTotal;
+            daySection.querySelector('.day-total-display').textContent = 'Day total: $' + dayTotal.toFixed(2);
+
+            updateWeeklyTotals();
+        }
+
+        function addCheque(button) {
+            const table = button.closest('.day-section').querySelector('.cheques-table');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><input type="text" placeholder="Payee" style="width: 100%; padding: 4px; font-size: 12px;"></td>
+                <td><input type="number" placeholder="#" style="width: 50px; padding: 4px; font-size: 12px;"></td>
+                <td><input type="number" class="chequeAmount currency-input" step="0.01" min="0" value="0" style="text-align: right; padding: 4px; font-size: 12px;" onchange="updateDayTotals(this.closest('.day-section'))"></td>
+                <td><button class="btn-danger btn-sm" onclick="this.closest('tr').remove(); updateDayTotals(this.closest('.day-section'))" style="padding: 2px 6px; font-size: 11px;">✕</button></td>
+            `;
+            table.appendChild(row);
+        }
+
+        function updateWeeklyTotals() {
+            let weeklyCash = 0, weeklyPOS = 0, weeklyCards = 0, weeklyCheques = 0;
+
+            document.querySelectorAll('.day-section').forEach(day => {
+                // Cash total
+                const cashTotalText = day.querySelector('.cashTotal').textContent;
+                weeklyCash += parseFloat(cashTotalText.replace('$', '')) || 0;
+
+                // POS sales
+                const posSales = parseFloat(day.querySelector('.pos-sales-input').value) || 0;
+                weeklyPOS += posSales;
+
+                // Cards/EFT/DD
+                const debit = parseFloat(day.querySelector('.cards-debit').value) || 0;
+                const visa = parseFloat(day.querySelector('.cards-visa').value) || 0;
+                const mc = parseFloat(day.querySelector('.cards-mc').value) || 0;
+                const eft = parseFloat(day.querySelector('.cards-eft').value) || 0;
+                const dd = parseFloat(day.querySelector('.cards-dd').value) || 0;
+                const cardsTotal = debit + visa + mc + eft + dd;
+                weeklyCards += cardsTotal;
+
+                // Cheques
+                day.querySelectorAll('.chequeAmount').forEach(input => {
+                    weeklyCheques += parseFloat(input.value) || 0;
+                });
+            });
+
+            const weeklyTotal = weeklyCash + weeklyPOS + weeklyCards + weeklyCheques;
+
+            document.getElementById('weeklyCashTotal').textContent = '$' + weeklyCash.toFixed(2);
+            document.getElementById('weeklyPOSTotal').textContent = '$' + weeklyPOS.toFixed(2);
+            document.getElementById('weeklyCardsTotal').textContent = '$' + weeklyCards.toFixed(2);
+            document.getElementById('weeklyChequeTotal').textContent = '$' + weeklyCheques.toFixed(2);
+            document.getElementById('totalDeposit').textContent = '$' + weeklyTotal.toFixed(2);
+        }
+
+        function initializePettyCash() {
+            const coinsContainer = document.getElementById('pcCoinsTable');
+            const billsContainer = document.getElementById('pcBillsTable');
+
+            coins.forEach(coin => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${coin.label}</td>
+                    <td><input type="number" class="pcCoinQty qty-input" data-value="${coin.value}" min="0" value="0" onchange="updatePCTotals()"></td>
+                    <td class="pcCoinAmount">$0.00</td>
+                `;
+                coinsContainer.appendChild(row);
+            });
+
+            bills.forEach(bill => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${bill.label}</td>
+                    <td><input type="number" class="pcBillQty qty-input" data-value="${bill.value}" min="0" value="0" onchange="updatePCTotals()"></td>
+                    <td class="pcBillAmount">$0.00</td>
+                `;
+                billsContainer.appendChild(row);
+            });
+        }
+
+        function updatePCTotals() {
+            let coinTotal = 0, billTotal = 0;
+
+            document.querySelectorAll('.pcCoinQty').forEach(input => {
+                const qty = parseFloat(input.value) || 0;
+                const value = parseFloat(input.getAttribute('data-value'));
+                const amount = qty * value;
+                input.closest('tr').querySelector('.pcCoinAmount').textContent = '$' + amount.toFixed(2);
+                coinTotal += amount;
+            });
+
+            document.querySelectorAll('.pcBillQty').forEach(input => {
+                const qty = parseFloat(input.value) || 0;
+                const value = parseFloat(input.getAttribute('data-value'));
+                const amount = qty * value;
+                input.closest('tr').querySelector('.pcBillAmount').textContent = '$' + amount.toFixed(2);
+                billTotal += amount;
+            });
+
+            const totalCash = coinTotal + billTotal;
+            const floatAmount = parseFloat(document.getElementById('pettyCashFloat').value) || 200;
+            const variance = totalCash - floatAmount;
+
+            document.getElementById('pcTotalCoins').textContent = '$' + coinTotal.toFixed(2);
+            document.getElementById('pcTotalBills').textContent = '$' + billTotal.toFixed(2);
+            document.getElementById('pcTotalCash').textContent = '$' + totalCash.toFixed(2);
+            document.getElementById('pcVariance').textContent = '$' + variance.toFixed(2);
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.getElementById('pageTitle').textContent = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function saveDeposit() {
+            alert('Deposit saved! (Database integration coming in Phase 3)');
+        }
+
+        function printDeposit() {
+            window.print();
+        }
+
+        function clearDeposit() {
+            if (confirm('Clear all deposit data?')) {
+                document.querySelectorAll('#deposit input[type="number"]').forEach(input => input.value = '0');
+                updateWeeklyTotals();
+            }
+        }
+
+        function savePettyCash() {
+            alert('Petty cash saved! (Database integration coming in Phase 3)');
+        }
+
+        function printPettyCash() {
+            window.print();
+        }
+
+        function clearPettyCash() {
+            if (confirm('Clear all petty cash data?')) {
+                document.querySelectorAll('#pettycash input[type="number"]').forEach(input => input.value = '0');
+                updatePCTotals();
+            }
+        }
+
+        function saveSettings() {
+            alert('Settings saved! (Database integration coming in Phase 3)');
+        }
+
+        function loadArchive() {
+            console.log('Load archive');
+        }
+
+        function archiveYear() {
+            alert('Archive fiscal year (Database integration coming in Phase 3)');
+        }
+    </script>
+
+<!-- Cashier Manager Modal -->
+<div id="cashierModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
+    <div style="background:white; width:500px; max-height:600px; margin:50px auto; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.2); padding:20px; display:flex; flex-direction:column;">
+        <h2 style="margin-top:0;">Manage Cashiers</h2>
+        
+        <div style="margin-bottom:15px; display:flex; gap:8px;">
+            <input type="text" id="newCashierInput" placeholder="Enter cashier name" style="flex:1; padding:8px; border:1px solid #ddd; border-radius:4px; font-size:13px;">
+            <button onclick="addCashier()" style="padding:8px 15px; background:#2563eb; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:600;">Add</button>
+        </div>
+
+        <div id="cashierList" style="flex:1; overflow-y:auto; margin-bottom:15px; border:1px solid #ddd; border-radius:4px; padding:10px;">
+            <!-- Cashiers will be populated here -->
+        </div>
+
+        <div style="display:flex; gap:8px;">
+            <button onclick="saveCashiers()" style="flex:1; padding:10px; background:#10b981; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:600;">💾 Save</button>
+            <button onclick="closeCashierManager()" style="flex:1; padding:10px; background:#6b7280; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:600;">✕ Close</button>
         </div>
     </div>
+</div>
 
-    <script src="renderer.js"></script>
+<!-- Float Composition Manager Modal -->
+<div id="floatModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000;">
+    <div style="background:white; width:600px; max-height:700px; margin:30px auto; border-radius:8px; box-shadow:0 2px 10px rgba(0,0,0,0.2); padding:20px; display:flex; flex-direction:column; overflow-y:auto;">
+        <h2 style="margin-top:0;">Float Composition</h2>
+        
+        <div style="background:#f3f4f6; padding:10px; border-radius:4px; margin-bottom:15px;">
+            <div style="font-size:11px; color:#666;">Total Float Value: <strong id="floatTotalDisplay" style="font-size:13px;">$0.00</strong></div>
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <label style="font-weight:600; font-size:12px; display:block; margin-bottom:8px;">Coins</label>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <div>
+                    <label style="font-size:11px;">$2.00</label>
+                    <input type="number" id="floatCoin200" value="0" style="width:100%; padding:6px; font-size:11px;" oninput="updateFloatTotal()">
+                </div>
+                <div>
+                    <label style="font-size:11px;">$1.00</label>
+                    <input type="number" id="floatCoin100" value="0" style="width:100%; padding:6px; font-size:11px;" oninput="updateFloatTotal()">
+                </div>
+                <div>
+                    <label style="font-size:11px;">$0.25</label>
+                    <input type="number" id="floatCoin25" value="0" style="width:100%; padding:6px; font-size:11px;" oninput="updateFloatTotal()">
+                </div>
+                <div>
+                    <label style="font-size:11px;">$0.10</label>
+                    <input type="number" id="floatCoin10" value="0" style="width:100%; padding:6px; font-size:11px;" oninput="updateFloatTotal()">
+                </div>
+                <div>
+                    <label style="font-size:11px;">$0.05</label>
+                    <input type="number" id="floatCoin5" value="0" style="width:100%; padding:6px; font-size:11px;" oninput="updateFloatTotal()">
+                </div>
+                <div>
+                    <label style="font-size:11px;">$0.01</label>
+                    <input type="number" id="floatCoin1" value="0" style="width:100%; padding:6px; font-size:11px;" oninput="updateFloatTotal()">
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-bottom:15px;">
+            <label style="font-weight:600; font-size:12px; display:block; margin-bottom:8px;">Bills</label>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <div>
+                    <label style="font-size:11px;">$5</label>
+                    <input type="number" id="floatBill5" value="0" style="width:100%; padding:6px; font-size:11px;" oninput="updateFloatTotal()">
+                </div>
+                <div>
+                    <label style="font-size:11px;">$10</label>
+                    <input type="number" id="floatBill10" value="0" style="width:100%; padding:6px; font-size:11px;" oninput="updateFloatTotal()">
+                </div>
+                <div>
+                    <label style="font-size:11px;">$20</label>
+                    <input type="number" id="floatBill20" value="0" style="width:100%; padding:6px; font-size:11px;" oninput="updateFloatTotal()">
+                </div>
+                <div>
+                    <label style="font-size:11px;">$50</label>
+                    <input type="number" id="floatBill50" value="0" style="width:100%; padding:6px; font-size:11px;" oninput="updateFloatTotal()">
+                </div>
+                <div>
+                    <label style="font-size:11px;">$100</label>
+                    <input type="number" id="floatBill100" value="0" style="width:100%; padding:6px; font-size:11px;" oninput="updateFloatTotal()">
+                </div>
+            </div>
+        </div>
+
+        <div style="display:flex; gap:8px;">
+            <button onclick="saveFloatComposition()" style="flex:1; padding:10px; background:#10b981; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:600;">💾 Save</button>
+            <button onclick="closeFloatModal()" style="flex:1; padding:10px; background:#6b7280; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:600;">✕ Close</button>
+        </div>
+    </div>
+</div>
+
+<script src="renderer.js"></script>
 </body>
 </html>
+
 

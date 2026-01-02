@@ -11,6 +11,6 @@
   "author": "Sav-Tyler",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^latest"
+    "electron": "latest"
   }
 }
